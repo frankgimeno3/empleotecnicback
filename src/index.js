@@ -2,6 +2,7 @@
 import app from "./app.js";
 import connectDB from "./db.js";
 
+
 // Conectarse a la base de datos de MongoDB
 connectDB();
 

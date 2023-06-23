@@ -40,12 +40,12 @@ export const login = async (req, res) => {
     // Verificar si el correo electrónico y la contraseña son correctos
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: 'Credenciales inválidas' });
+      return res.status(401).json({ message: 'Usuario inválido' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Credenciales inválidas' });
+      return res.status(401).json({ message: 'Contra inválidas' });
     }
 
     // Generar un token de acceso

@@ -1,5 +1,6 @@
 import User from '../models/users.model.js';
 
+
 export const getUsers = async (req, res) => {
   try {
     // Obtener todos los usuarios de la base de datos
@@ -7,6 +8,7 @@ export const getUsers = async (req, res) => {
 
     // Enviar una respuesta al cliente
     res.status(200).json(users);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Ha ocurrido un error al obtener los usuarios' });
@@ -28,6 +30,22 @@ export const getUserById = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Ha ocurrido un error al obtener el usuario' });
+  }
+};
+
+export const createUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Crear un nuevo usuario en la base de datos
+    const user = new User({ email, password });
+    await user.save();
+
+    // Enviar una respuesta al cliente
+    res.status(201).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al crear el usuario' });
   }
 };
 

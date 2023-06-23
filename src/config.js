@@ -1,11 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export default {
   // ESTA ES PARA LOCAL!
-  mongoURI: 'mongodb://127.0.0.1:27017/Tecnobolsa',
+  mongoURI: process.env.MONGODB_URI ,
   
   
-  // ESTA ES LA DE ATLAS ONNLINE
-    // mongoURI: 'mongodb+srv://frankgimeno3:zVuxTHiCX7H2UM6W@cluster0.example.mongodb.net/Tecnobolsa?retryWrites=true&w=majority',
-  
-  //Esto es para cambiar la encriptacion de JWT Creo...............................
-    // secretKey: 'clave_secreta_para_jsonwebtoken'
+  //esto es para el jwt, sino no te deja hacer /auth/login en el back
+  secretKey: process.env.SECRET_JWT_KEY
+
   };
