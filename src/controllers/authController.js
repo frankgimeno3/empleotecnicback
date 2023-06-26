@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import config from '../config.js';
 import User from '../models/users.model.js';
+import cookie from 'cookie';
 
 export const register = async (req, res) => {
   try {
@@ -52,7 +53,14 @@ export const login = async (req, res) => {
     const accessToken = jwt.sign({ userId: user._id }, config.secretKey);
 
     // Enviar una respuesta al cliente
-    res.status(200).json({ accessToken });
+    res.status(200)
+    .setHeader('Set-Cookie', cookie.serialize('jwt', accessToken, {
+      path: '/',
+      httpOnly:true
+      // exipres:
+    }))
+      .json({ accessToken })
+      ;
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Ha ocurrido un error al iniciar sesión' });
