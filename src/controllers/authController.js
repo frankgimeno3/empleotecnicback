@@ -31,9 +31,9 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: 'Contra inválidas' });
     }
     const accessToken = jwt.sign({ userId: user._id }, config.secretKey);
+    
     res.status(200)
     .setHeader('Set-Cookie', cookie.serialize('jwt', accessToken, {
-      path: '/',
       httpOnly:true}))
       .json({ accessToken });
   } catch (error) {
