@@ -1,20 +1,20 @@
 import express from 'express';
-import { getnotificacions } from '../controllers/notificacionController.js';
+import { getofertas } from '../controllers/ofertaController.js';
 import authenticateToken from '../middlewares/authenticateToken.js';
 
 const router = express.Router();
 
 // Rutas para obtener y modificar los datos de los usuarios
-// router.get('/', authenticateToken, getnotificacions);
-// router.get('/:id', authenticateToken, getnotificacionById);
-// router.post('/', authenticateToken, createnotificacion);
-// router.patch('/:id', authenticateToken, updatenotificacion);
-// router.delete('/:id', authenticateToken, deletenotificacion);
+// router.get('/', authenticateToken, getofertas);
+// router.get('/:id', authenticateToken, getofertaById);
+// router.post('/', authenticateToken, createoferta);
+// router.patch('/:id', authenticateToken, updateoferta);
+// router.delete('/:id', authenticateToken, deleteoferta);
 
-router.get('/', getnotificacions);
-// router.get('/:id', getnotificacionById);
-// router.post('/', createnotificacion);
-// router.patch('/:id', updatenotificacion);
-// router.delete('/:id', deletenotificacion);
+router.get('/', getofertas);
+// router.get('/:id', getofertaById);
+// router.post('/', createoferta);
+// router.patch('/:id', updateoferta);
+// router.delete('/:id', deleteoferta);
 
 export default router;
