@@ -4,7 +4,7 @@ const notificacionSchema = new mongoose.Schema({
   cuentareceptora: { type: String, required: true, unique: true },
   cuentaemisora: { type: String, required: true },
   visible: { type: Boolean, default: true },
-  contenido: { type: String }
+  contenido: { type: String },
   fechaCreacion: { type: Date, default: Date.now }
 
 });
