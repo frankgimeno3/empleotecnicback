@@ -7,9 +7,12 @@ const router = express.Router();
 // Rutas para registrarse e iniciar sesión
 router.post('/register', register);
 router.post('/login', login);
-router.post('/auth/logout', (req, res) => {
-    res.clearCookie('jwt');
+router.post('/logout', (req, res) => {
+    try {res.clearCookie('jwt');
     res.status(200).json({ message: 'Sesión cerrada' });
+}   catch (error){
+    res.status(404).json({message: 'No se pudo cerrar sesión por este error:', error})
+}
   });
   
 export default router;

@@ -41,20 +41,19 @@ export const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Contra inválidas" });
     }
-    const accessToken = jwt.sign({ userId: user._id }, config.secretKey);
+    const accessToken = jwt.sign({         
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+      userId: user._id }, 
+      config.secretKey);
 
     res
-      .status(200).json({
-        id: user._id,
-        name: user.fullname
-            })
       .setHeader(
         "Set-Cookie",
         cookie.serialize("jwt", accessToken, {
           httpOnly: true,
-        })
-      )
-      .json({ accessToken });
+        }))          
+      .json({ accessToken })
+    return res.json('login succesfully  ')
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Ha ocurrido un error al iniciar sesión" });
