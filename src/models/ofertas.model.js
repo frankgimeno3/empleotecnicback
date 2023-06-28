@@ -1,10 +1,18 @@
 import mongoose from 'mongoose';
 
-const OfertaSchema = new mongoose.Schema({
+const ofertaSchema = new mongoose.Schema({
   cuentaemisora: { type: String, required: true },
-// datos descripcion
+  titulo: { type: String, required: true },
+  nombreEmpresa: { type: String, required: true },
+  descripcion: { type: String, required: true },
+  salario: { type: String, required: true },
+  jornada: { type: String, required: true },
+  diaslaborables: { type: String, required: true },
+  ubicacion: { type: String, required: true },
+  beneficios: { type: String, },
+  requisitosadicionales: { type: String, },
 });
 
-const User = mongoose.model('Oferta', ofertaSchema);
+const Oferta = mongoose.model('Oferta', ofertaSchema);
 
 export default Oferta;
