@@ -46,14 +46,13 @@ export const login = async (req, res) => {
       userId: user._id }, 
       config.secretKey);
 
-    res
-      .setHeader(
-        "Set-Cookie",
-        cookie.serialize("jwt", accessToken, {
-          httpOnly: true,
-        }))          
-      .json({ accessToken })
-    return res.json('login succesfully  ')
+    res.setHeader(  
+      "Set-Cookie",
+      cookie.serialize("accessToken", accessToken, {
+        httpOnly: true,
+      })
+    );
+    res.json({ accessToken });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Ha ocurrido un error al iniciar sesión" });
