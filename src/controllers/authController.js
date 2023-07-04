@@ -39,20 +39,24 @@ export const login = async (req, res) => {
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Contra inválidas" });
+      return res.status(401).json({ message: "Contra inválida" });
     }
-    const accessToken = jwt.sign({         
-      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
-      userId: user._id }, 
-      config.secretKey);
+    
+    
+    const payload = {email} 
+    const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+      algorithm: "HS256",
+      expiresIn: "6h",
+    });
 
-    res.setHeader(  
-      "Set-Cookie",
-      cookie.serialize("accessToken", accessToken, {
-        httpOnly: true,
-      })
-    );
-    res.json({ accessToken });
+    // res.setHeader('Set-Cookie', [
+    //   cookie.serialize('accessToken', authToken, {
+    //     httpOnly: true,
+    //     maxAge: 60000 * 15,
+    //   }),
+    // ]);
+
+    res.status(200).json({ authToken: authToken });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Ha ocurrido un error al iniciar sesión" });

@@ -18,6 +18,7 @@ const authenticateToken = async (req, res, next) => {
     }
 
     req.user = user; // Almacena el objeto de usuario en el objeto de solicitud para su posterior uso
+ 
     next(); // Pasa al siguiente middleware o controlador
   } catch (error) {
     console.error(error); // Registra cualquier error en la consola
