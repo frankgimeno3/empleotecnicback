@@ -41,9 +41,9 @@ export const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Contra inválida" });
     }
-    
-    
-    const payload = {email} 
+    const authValue = user._id.toString()
+    const payload = {authValue}
+    console.log(payload)
     const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
       algorithm: "HS256",
       expiresIn: "6h",
