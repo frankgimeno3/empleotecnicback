@@ -12,9 +12,9 @@ const router = express.Router();
 // router.delete('/:id', authenticateToken, deleteoferta);
 
 router.get('/', getofertas);
-// router.get('/:id', getofertaById);
-// router.post('/', createoferta);
-// router.patch('/:id', updateoferta);
-// router.delete('/:id', deleteoferta);
+router.get('/:id', getofertaById);
+router.post('/', createoferta);
+router.patch('/:id', updateoferta);
+router.delete('/:id', deleteoferta);
 
 export default router;
