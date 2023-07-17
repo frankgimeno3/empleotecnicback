@@ -7,6 +7,7 @@ import cookie from "cookie";
 export const register = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body)
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res
@@ -20,9 +21,18 @@ export const register = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ email, password: hashedPassword });
+
     await newUser.save();
-    const accessToken = jwt.sign({ userId: newUser._id }, config.secretKey);
-    res.status(201).json({ accessToken });
+
+    const authValue = newUser._id.toString()
+    const payload = {authValue}
+    console.log(payload)
+    const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+      algorithm: "HS256",
+      expiresIn: "6h",
+    });
+    res.status(201).json({ authToken: authToken });
+
   } catch (error) {
     console.error(error);
     res
@@ -48,6 +58,7 @@ export const login = async (req, res) => {
       algorithm: "HS256",
       expiresIn: "6h",
     });
+    res.status(200).json({ authToken: authToken });
 
     // res.setHeader('Set-Cookie', [
     //   cookie.serialize('accessToken', authToken, {
@@ -56,7 +67,6 @@ export const login = async (req, res) => {
     //   }),
     // ]);
 
-    res.status(200).json({ authToken: authToken });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Ha ocurrido un error al iniciar sesión" });
