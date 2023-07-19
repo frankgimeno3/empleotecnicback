@@ -7,7 +7,7 @@ const router = express.Router();
 // Rutas para registrarse e iniciar sesión
 router.post('/register', register);
 router.post('/login', login);
-router.post('/logout', (req, res) => {
+router.post('/logout', (res) => {
     try {
     res.status(200).json({ message: 'Sesión cerrada' });
 }   catch (error){

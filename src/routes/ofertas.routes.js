@@ -1,5 +1,6 @@
 import express from 'express';
-import { getofertas } from '../controllers/ofertaController.js';
+import { getOfertas, getOfertaById, createOferta, updateOferta, deleteOferta } from '../controllers/ofertaController.js';
+ 
 import authenticateToken from '../middlewares/authenticateToken.js';
 
 const router = express.Router();
@@ -11,10 +12,10 @@ const router = express.Router();
 // router.patch('/:id', authenticateToken, updateoferta);
 // router.delete('/:id', authenticateToken, deleteoferta);
 
-router.get('/', getofertas);
-router.get('/:id', getofertaById);
-router.post('/', createoferta);
-router.patch('/:id', updateoferta);
-router.delete('/:id', deleteoferta);
+router.get('/', getOfertas);
+router.get('/:id', getOfertaById);
+router.post('/', createOferta);
+router.patch('/:id', updateOferta);
+router.delete('/:id', deleteOferta);
 
 export default router;

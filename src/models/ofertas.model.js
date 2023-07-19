@@ -15,6 +15,8 @@ const ofertaSchema = new mongoose.Schema({
   diaslaborables: { type: String, required: true },
   beneficios: { type: String, },
   requisitosadicionales: { type: String, },
+
+  estado: {type: String}
 });
 
 const Oferta = mongoose.model('Oferta', ofertaSchema);

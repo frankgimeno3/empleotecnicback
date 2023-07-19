@@ -1,95 +1,117 @@
-import oferta from '../models/ofertas.model.js';
+import Oferta from '../models/ofertas.model.js';
 
-
-export const getofertas = async (req, res) => {
+export const getOfertas = async (req, res) => {
   try {
-    // Obtener todos los ofertas de la base de datos
-    const ofertas = await oferta.find();
+    // Obtener todas las ofertas de la base de datos
+    const ofertas = await Oferta.find();
 
     // Enviar una respuesta al cliente
     res.status(200).json(ofertas);
-
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Ha ocurrido un error al obtener los ofertas' });
+    res.status(500).json({ message: 'Ha ocurrido un error al obtener las ofertas' });
   }
 };
 
-// export const getofertaById = async (req, res) => {
-//   try {
-//     const { id } = req.params;
+export const getOfertaById = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-//     // Buscar un oferta por su ID en la base de datos
-//     const oferta = await oferta.findById(id);
-//     if (!oferta) {
-//       return res.status(404).json({ message: 'oferta no encontrada' });
-//     }
+    // Buscar una oferta por su ID en la base de datos
+    const oferta = await Oferta.findById(id);
+    if (!oferta) {
+      return res.status(404).json({ message: 'Oferta no encontrada' });
+    }
 
-//     // Enviar una respuesta al cliente
-//     res.status(200).json(oferta);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Ha ocurrido un error al obtener el oferta' });
-//   }
-// };
+    // Enviar una respuesta al cliente
+    res.status(200).json(oferta);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al obtener la oferta' });
+  }
+};
 
-// export const createoferta = async (req, res) => {
-//   try {
-//     const {cuentareceptora, cuentaemisora, visible, contenido, fechaCreacion} = req.body;
+export const createOferta = async (req, res) => {
+  try {
+    const {
+      cuentaemisora,
+      titulo,
+      descripcion,
+      nombreEmpresa,
+      sector,
+      ubicacion,
+      tipoempleo,
+      jornada,
+      salariohora,
+      diaslaborables,
+      beneficios,
+      requisitosadicionales,
+    } = req.body;
 
-//     // Crear un nuevo oferta en la base de datos
-//     const oferta = new oferta({cuentareceptora, cuentaemisora, visible, contenido, fechaCreacion});
-//     await oferta.save();
+    // Crear una nueva oferta en la base de datos
+    const oferta = new Oferta({
+      cuentaemisora,
+      titulo,
+      descripcion,
+      nombreEmpresa,
+      sector,
+      ubicacion,
+      tipoempleo,
+      jornada,
+      salariohora,
+      diaslaborables,
+      beneficios,
+      requisitosadicionales,
+    });
+    await oferta.save();
 
-//     // Enviar una respuesta al cliente
-//     res.status(201).json(oferta);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Ha ocurrido un error al crear el oferta' });
-//   }
-// };
+    // Enviar una respuesta al cliente
+    res.status(201).json(oferta);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al crear la oferta' });
+  }
+};
 
-// export const updateoferta = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { email, password } = req.body;
+export const updateOferta = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
 
-//     // Buscar un oferta por su ID en la base de datos
-//     const oferta = await oferta.findById(id);
-//     if (!oferta) {
-//       return res.status(404).json({ message: 'oferta no encontrado' });
-//     }
+    // Buscar una oferta por su ID en la base de datos
+    const oferta = await Oferta.findById(id);
+    if (!oferta) {
+      return res.status(404).json({ message: 'Oferta no encontrada' });
+    }
 
-//     // Actualizar el correo electrónico y la contraseña del oferta
-//     if (email) oferta.email = email;
-//     if (password) oferta.password = await bcrypt.hash(password, 10);
-//     await oferta.save();
+    // Actualizar la oferta con los nuevos datos
+    await Oferta.findByIdAndUpdate(id, updateData, { new: true });
 
-//     // Enviar una respuesta al cliente
-//     res.status(200).json(oferta);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Ha ocurrido un error al actualizar el oferta' });
-//   }
-// };
+    // Enviar una respuesta al cliente con la oferta actualizada
+    res.status(200).json(updateData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al actualizar la oferta' });
+  }
+};
 
-// export const deleteoferta = async (req, res) => {
-//   try {
-//     const { id } = req.params;
+export const deleteOferta = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-//     // Buscar un oferta por su ID en la base de datos
-//     const oferta = await oferta.findById(id);
-//     if (!oferta) {
-//       return res.status(404).json({ message: 'oferta no encontrado' });
-//     }
+    // Buscar una oferta por su ID en la base de datos
+    const oferta = await Oferta.findById(id);
+    if (!oferta) {
+      return res.status(404).json({ message: 'Oferta no encontrada' });
+    }
 
-//     // Eliminar el oferta de la base de datos
-//     await oferta.deleteOne();
+    // Eliminar la oferta de la base de datos
+    await Oferta.findByIdAndRemove(id);
 
-//     // Enviar una respuesta al cliente
-//     res.status(200).json(oferta);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Ha ocurrido un error al eliminar el oferta' });
-//   }
-// };
+    // Enviar una respuesta al cliente con la oferta eliminada
+    res.status(200).json(oferta);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al eliminar la oferta' });
+  }
+};
