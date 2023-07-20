@@ -1,9 +1,8 @@
 import Notificacion from '../models/notificaciones.model.js';
 
-
-export const getnotificacions = async (req, res) => {
+export const getnotificacions  = async (req, res) => {
   try {
-    // Obtener todos los notificacions de la base de datos
+    // Obtener todas las notificaciones de la base de datos
     const notificaciones = await Notificacion.find();
 
     // Enviar una respuesta al cliente
@@ -11,85 +10,88 @@ export const getnotificacions = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Ha ocurrido un error al obtener los notificacions' });
+    res.status(500).json({ message: 'Ha ocurrido un error al obtener las notificaciones' });
   }
 };
 
-// export const getnotificacionById = async (req, res) => {
-//   try {
-//     const { id } = req.params;
+export const getnotificacionById   = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-//     // Buscar un notificacion por su ID en la base de datos
-//     const notificacion = await notificacion.findById(id);
-//     if (!notificacion) {
-//       return res.status(404).json({ message: 'notificacion no encontrada' });
-//     }
+    // Buscar una notificación por su ID en la base de datos
+    const notificacion = await Notificacion.findById(id);
+    if (!notificacion) {
+      return res.status(404).json({ message: 'Notificación no encontrada' });
+    }
 
-//     // Enviar una respuesta al cliente
-//     res.status(200).json(notificacion);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Ha ocurrido un error al obtener el notificacion' });
-//   }
-// };
+    // Enviar una respuesta al cliente
+    res.status(200).json(notificacion);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al obtener la notificación' });
+  }
+};
 
-// export const createnotificacion = async (req, res) => {
-//   try {
-//     const {cuentareceptora, cuentaemisora, visible, contenido, fechaCreacion} = req.body;
+export const createnotificacion = async (req, res) => {
+  try {
+    const { cuentareceptora, cuentaemisora, visible, contenido } = req.body;
 
-//     // Crear un nuevo notificacion en la base de datos
-//     const notificacion = new notificacion({cuentareceptora, cuentaemisora, visible, contenido, fechaCreacion});
-//     await notificacion.save();
+    // Crear una nueva notificación en la base de datos
+    const notificacion = new Notificacion({ cuentareceptora, cuentaemisora, visible, contenido });
+    await notificacion.save();
 
-//     // Enviar una respuesta al cliente
-//     res.status(201).json(notificacion);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Ha ocurrido un error al crear el notificacion' });
-//   }
-// };
+    // Enviar una respuesta al cliente
+    res.status(201).json(notificacion);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al crear la notificación' });
+  }
+};
 
-// export const updatenotificacion = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { email, password } = req.body;
+export const updatenotificacion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { cuentareceptora, cuentaemisora, visible, contenido } = req.body;
 
-//     // Buscar un notificacion por su ID en la base de datos
-//     const notificacion = await notificacion.findById(id);
-//     if (!notificacion) {
-//       return res.status(404).json({ message: 'notificacion no encontrado' });
-//     }
+    // Buscar una notificación por su ID en la base de datos
+    const notificacion = await Notificacion.findById(id);
+    if (!notificacion) {
+      return res.status(404).json({ message: 'Notificación no encontrada' });
+    }
 
-//     // Actualizar el correo electrónico y la contraseña del notificacion
-//     if (email) notificacion.email = email;
-//     if (password) notificacion.password = await bcrypt.hash(password, 10);
-//     await notificacion.save();
+    // Actualizar los campos de la notificación
+    notificacion.cuentareceptora = cuentareceptora;
+    notificacion.cuentaemisora = cuentaemisora;
+    notificacion.visible = visible;
+    notificacion.contenido = contenido;
 
-//     // Enviar una respuesta al cliente
-//     res.status(200).json(notificacion);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Ha ocurrido un error al actualizar el notificacion' });
-//   }
-// };
+    await notificacion.save();
 
-// export const deletenotificacion = async (req, res) => {
-//   try {
-//     const { id } = req.params;
+    // Enviar una respuesta al cliente
+    res.status(200).json(notificacion);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al actualizar la notificación' });
+  }
+};
 
-//     // Buscar un notificacion por su ID en la base de datos
-//     const notificacion = await notificacion.findById(id);
-//     if (!notificacion) {
-//       return res.status(404).json({ message: 'notificacion no encontrado' });
-//     }
+export const deletenotificacion = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-//     // Eliminar el notificacion de la base de datos
-//     await notificacion.deleteOne();
+    // Buscar una notificación por su ID en la base de datos
+    const notificacion = await Notificacion.findById(id);
+    if (!notificacion) {
+      return res.status(404).json({ message: 'Notificación no encontrada' });
+    }
 
-//     // Enviar una respuesta al cliente
-//     res.status(200).json(notificacion);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Ha ocurrido un error al eliminar el notificacion' });
-//   }
-// };
+    // Eliminar la notificación de la base de datos
+    await notificacion.deleteOne();
+
+    // Enviar una respuesta al cliente
+    res.status(200).json(notificacion);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Ha ocurrido un error al eliminar la notificación' });
+  }
+};
